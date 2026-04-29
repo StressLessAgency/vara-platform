@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/* VARA brand v0 -- editorial luxury register
+   Tokens shared with /brand/system/tokens.json and the deck stylesheet.
+*/
+
+@theme {
+  --color-bg:                #faf7f2;
+  --color-surface:           #ffffff;
+  --color-ink:               #1a2935;
+  --color-ink-soft:          #4b5563;
+  --color-ink-mute:          #6b7280;
+  --color-ink-faint:         #9ca3af;
+  --color-ocean-deep:        #0f2a3d;
+  --color-ocean:             #1a2935;
+  --color-stone:             #efe8dc;
+  --color-gold:              #b8956a;
+  --color-gold-dim:          #8a6b47;
+  --color-hairline:          #dcd6cd;
+  --color-hairline-strong:   #b8b0a2;
+
+  --font-serif:              var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans:               var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --tracking-tight:          -0.02em;
+  --tracking-text:           -0.005em;
+  --tracking-eyebrow:        0.18em;
+
+  --ease:                    cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  letter-spacing: var(--tracking-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--color-ocean-deep); color: var(--color-bg); }
+
+/* editorial typography utilities */
+@layer utilities {
+  .font-serif       { font-family: var(--font-serif); }
+  .font-sans        { font-family: var(--font-sans); }
+  .tabular          { font-variant-numeric: tabular-nums lining-nums; }
+  .oldstyle         { font-variant-numeric: oldstyle-nums tabular-nums; }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+  .opsz-text       { font-variation-settings: "opsz" 14, "SOFT" 50; }
+  .opsz-title      { font-variation-settings: "opsz" 36, "SOFT" 50; }
+  .opsz-display    { font-variation-settings: "opsz" 96, "SOFT" 50; }
+  .opsz-hero       { font-variation-settings: "opsz" 144, "SOFT" 50; }
+  .display-1 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: var(--tracking-tight);
+    font-variation-settings: "opsz" 96, "SOFT" 50;
+  }
+  .display-2 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.02;
+    letter-spacing: var(--tracking-tight);
+    font-variation-settings: "opsz" 60, "SOFT" 50;
+  }
+  .display-3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.25vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+  }
+  .body-serif {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-variation-settings: "opsz" 18, "SOFT" 50;
+  }
+  .hairline-x { background: var(--color-hairline); height: 1px; width: 100%; }
+  .hairline-strong-x { background: var(--color-ocean-deep); height: 1px; width: 100%; }
+}
