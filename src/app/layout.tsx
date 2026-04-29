@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
 import { AmbientBackdrop } from "@/components/motion/AmbientBackdrop";
@@ -24,13 +24,20 @@ export const metadata: Metadata = {
   description: "VARA Resident Platform.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#FAFAF8",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-[var(--color-bg)]">
         <OpeningCeremony />
         <AmbientBackdrop />
         <Cursor />

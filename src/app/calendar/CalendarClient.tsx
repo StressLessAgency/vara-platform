@@ -58,26 +58,27 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
         title="What's ahead"
         subtitle="Events, retreats, and sessions across the property."
         meta={`${events.length} upcoming`}
+        heroImage="/vara/photos/p07-img02-1740x899.jpeg"
       />
 
-      {/* Filter chips */}
-      <div className="flex gap-2 mb-10 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+      {/* Glass filter chips */}
+      <div className="flex gap-2.5 mb-12 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {FILTERS.map(({ label, value }) => {
           const active = filter === value;
           return (
             <button
               key={value}
               onClick={() => setFilter(value)}
-              className={`relative px-4 py-1.5 rounded-full text-[0.75rem] font-medium tracking-wide whitespace-nowrap transition-colors ${
+              className={`relative px-5 py-2 rounded-full text-[0.7rem] font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all ${
                 active
-                  ? "text-[var(--color-bg)]"
-                  : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] bg-[var(--color-surface)] border border-[var(--color-hairline)]"
+                  ? "text-white"
+                  : "text-[#6B7A85] hover:text-[#1A2935] bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] shadow-[0_2px_24px_rgba(26,41,53,0.06)]"
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="calendar-filter"
-                  className="absolute inset-0 rounded-full bg-[var(--color-ocean-deep)]"
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-[#1A2935] to-[#4A90A8]"
                   style={{ zIndex: -1 }}
                   transition={{ type: "spring", stiffness: 400, damping: 34 }}
                 />
@@ -90,12 +91,14 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
 
       {/* Timeline */}
       <AnimatePresence mode="popLayout">
-        <div className="space-y-12">
+        <div className="space-y-14">
           {Array.from(grouped.entries()).map(([date, dayEvents], gi) => (
             <Reveal key={date} delay={gi * 0.06}>
               <div>
-                <div className="flex items-center gap-4 mb-5">
-                  <span className="eyebrow flex-shrink-0">{date}</span>
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] flex-shrink-0">
+                    {date}
+                  </span>
                   <HairlineDraw className="flex-1" delay={0.1} />
                 </div>
 
@@ -103,35 +106,35 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
                   {dayEvents.map((evt) => (
                     <RevealItem key={evt.id}>
                       <Magnetic strength={3}>
-                        <div className="group p-5 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-hairline)] hover:border-[var(--color-hairline-strong)] transition-colors cursor-pointer">
+                        <div className="group p-5 sm:p-6 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow cursor-pointer">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1.5">
-                                <span className="text-[0.6rem] text-[var(--color-gold)] tracking-[0.12em] uppercase font-medium">
+                              <div className="flex items-center gap-2.5 mb-2">
+                                <span className="px-2.5 py-0.5 rounded-full border border-[rgba(74,144,168,0.2)] text-[0.6rem] text-[#4A90A8] tracking-[0.1em] uppercase font-medium">
                                   {evt.type}
                                 </span>
-                                <span className="text-[0.6rem] text-[var(--color-ink-faint)]">
+                                <span className="text-[0.65rem] text-[#6B7A85]">
                                   {formatTime(evt.startsAt)} &middot; {evt.durationMinutes}min
                                 </span>
                               </div>
-                              <h3 className="font-serif text-[1.1rem] text-[var(--color-ink)] leading-snug group-hover:text-[var(--color-ocean-deep)] transition-colors"
+                              <h3 className="font-serif text-[1.1rem] text-[#1A2935] leading-snug group-hover:text-[#4A90A8] transition-colors"
                                 style={{ fontVariationSettings: '"opsz" 20, "SOFT" 50' }}>
                                 {evt.title}
                               </h3>
-                              <p className="text-[0.8rem] text-[var(--color-ink-mute)] mt-1.5 line-clamp-2">
+                              <p className="text-[0.8rem] text-[#6B7A85] mt-2 line-clamp-2 leading-relaxed">
                                 {evt.description}
                               </p>
-                              <p className="text-[0.75rem] text-[var(--color-ink-soft)] mt-2">
+                              <p className="text-[0.75rem] text-[#6B7A85]/70 mt-2.5">
                                 {evt.location} &middot; {evt.host}
                               </p>
                             </div>
 
-                            <div className="flex-shrink-0 flex flex-col items-end gap-2">
-                              <span className="tabular text-[0.7rem] text-[var(--color-ink-mute)]">
+                            <div className="flex-shrink-0 flex flex-col items-end gap-2.5 pt-1">
+                              <span className="tabular text-[0.7rem] text-[#6B7A85]">
                                 {evt.rsvpCount}/{evt.capacity}
                               </span>
                               {evt.priceUsd && (
-                                <span className="text-[0.7rem] text-[var(--color-gold)] font-medium">
+                                <span className="text-[0.7rem] text-[#4A90A8] font-medium">
                                   ${evt.priceUsd}
                                 </span>
                               )}
@@ -149,8 +152,8 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
       </AnimatePresence>
 
       {filtered.length === 0 && (
-        <div className="text-center py-20">
-          <p className="body-serif text-[var(--color-ink-soft)] text-lg">
+        <div className="text-center py-24">
+          <p className="body-serif text-[#6B7A85] text-lg">
             No events match this filter.
           </p>
         </div>

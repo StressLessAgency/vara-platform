@@ -1,6 +1,6 @@
 "use client";
 
-import { Reveal } from "@/components/motion/Reveal";
+import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { HairlineDraw } from "@/components/motion/HairlineDraw";
 import { ResidentCard } from "./ResidentCard";
 import type { Resident } from "@/lib/types";
@@ -41,16 +41,18 @@ const DEMO_RESIDENTS: Resident[] = [
 export function CommunityClient({ currentResident }: { currentResident: Resident }) {
   return (
     <Reveal>
-      <ul className="grid gap-px bg-[var(--color-hairline)]">
+      <ul className="grid gap-4 sm:grid-cols-2">
         {DEMO_RESIDENTS.map((r) => (
-          <ResidentCard key={r.id} r={r} preOpening={r.preOpening} />
+          <RevealItem key={r.id}>
+            <ResidentCard r={r} preOpening={r.preOpening} />
+          </RevealItem>
         ))}
       </ul>
 
-      <HairlineDraw className="mt-12" />
+      <HairlineDraw className="mt-14" />
 
-      <div className="text-center py-12">
-        <p className="body-serif text-[var(--color-ink-soft)] text-[1.1rem]">
+      <div className="text-center py-14">
+        <p className="body-serif text-[#6B7A85] text-[1.1rem]">
           More residents join as we approach opening.
         </p>
       </div>
