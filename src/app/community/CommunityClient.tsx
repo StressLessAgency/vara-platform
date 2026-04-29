@@ -41,7 +41,7 @@ const DEMO_RESIDENTS: Resident[] = [
 export function CommunityClient({ currentResident }: { currentResident: Resident }) {
   return (
     <Reveal>
-      <ul className="grid gap-4 sm:grid-cols-2">
+      <ul className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {DEMO_RESIDENTS.map((r) => (
           <RevealItem key={r.id}>
             <ResidentCard r={r} preOpening={r.preOpening} />

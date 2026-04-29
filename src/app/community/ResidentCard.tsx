@@ -29,7 +29,7 @@ export function ResidentCard({ r, preOpening }: { r: Resident; preOpening?: bool
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className="relative bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-7 flex flex-col gap-4 group cursor-default list-none hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow"
+      className="relative bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-7 flex flex-col gap-4 group cursor-default list-none hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow h-full"
       style={{ rotateX: rx, rotateY: ry, transformStyle: "preserve-3d", transformPerspective: 800 }}
       data-magnetic="true"
     >
@@ -44,7 +44,7 @@ export function ResidentCard({ r, preOpening }: { r: Resident; preOpening?: bool
       </div>
 
       <p
-        className="text-[0.95rem] text-[#6B7A85] leading-relaxed"
+        className="text-[0.95rem] text-[#6B7A85] leading-relaxed line-clamp-2 lg:line-clamp-none"
         style={{ transform: "translateZ(10px)" }}
       >
         {r.bio}

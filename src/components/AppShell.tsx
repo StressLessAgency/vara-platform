@@ -21,7 +21,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <>
       {/* Desktop side rail -- frosted glass */}
       <nav
-        className="fixed left-0 top-0 bottom-0 z-40 hidden lg:flex flex-col items-center justify-between w-[72px] py-8 glass-nav"
+        className="fixed left-0 top-0 bottom-0 z-40 hidden md:flex flex-col items-center justify-between w-[72px] xl:w-[80px] py-8 glass-nav"
         aria-label="Main navigation"
       >
         <Link
@@ -62,15 +62,15 @@ export function AppShell({ children }: { children: ReactNode }) {
       </nav>
 
       {/* Main content */}
-      <main className="flex-1 lg:ml-[72px] pb-28 lg:pb-0">
-        <div className="mx-auto max-w-[1120px] px-5 sm:px-8 lg:px-12 pt-8 sm:pt-12 lg:pt-16">
+      <main className="flex-1 md:ml-[72px] xl:ml-[80px] pb-28 md:pb-0">
+        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20 pt-8 sm:pt-12 md:pt-14 lg:pt-16">
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.28, ease: [0.22, 0.61, 0.36, 1] }}
+              transition={{ type: "spring", stiffness: 260, damping: 28 }}
             >
               {children}
             </motion.div>
@@ -80,7 +80,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Mobile bottom bar -- floating frosted pill */}
       <div
-        className="fixed bottom-0 inset-x-0 z-40 lg:hidden flex justify-center pointer-events-none"
+        className="fixed bottom-0 inset-x-0 z-40 md:hidden flex justify-center pointer-events-none"
         style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
       >
         <nav

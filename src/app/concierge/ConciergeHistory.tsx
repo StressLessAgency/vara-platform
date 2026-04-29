@@ -9,7 +9,7 @@ export function ConciergeHistory({ requests }: { requests: ConciergeRequest[] })
 
   return (
     <Reveal delay={0.1}>
-      <section className="mt-16">
+      <section className="mt-16 lg:mt-0">
         <div className="flex items-center gap-4 mb-6">
           <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] flex-shrink-0">
             Previous Requests

@@ -82,7 +82,7 @@ export function ConciergeForm() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: duration.normal, ease: ease.out }}
-          className="space-y-8"
+          className="space-y-8 sm:space-y-10"
           onSubmit={submit}
         >
           <div>
@@ -115,7 +115,7 @@ export function ConciergeForm() {
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
               placeholder="Sunset table for two, Saturday, window if possible."
-              className="w-full bg-transparent py-2 font-serif italic text-[1.0625rem] text-[#1A2935] placeholder:text-[#6B7A85]/50 focus:outline-none resize-none"
+              className="w-full bg-transparent py-2 font-serif italic text-[1.0625rem] text-[#1A2935] placeholder:text-[#6B7A85]/50 focus:outline-none resize-none lg:min-h-[140px]"
             />
           </FocusField>
 

@@ -25,89 +25,102 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
         heroImage="/vara/photos/p10-img01-1740x899.jpeg"
       />
 
-      {/* Current check-in -- glass cards */}
-      <Reveal>
-        <section className="mb-16">
-          <div className="flex items-baseline justify-between mb-6">
-            <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
-              Week of {formatWeek(latest.weekOf)}
-            </span>
-            <span className="text-[0.7rem] text-[#6B7A85]">Latest check-in</span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <RevealItem>
-              <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
-                <CheckinDots label="Sleep" value={latest.sleep} delay={0} />
+      {/* xl+ 2-column: check-ins left, biomarkers right */}
+      <div className="xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start">
+        <div>
+          {/* Current check-in -- glass cards */}
+          <Reveal>
+            <section className="mb-16">
+              <div className="flex items-baseline justify-between mb-6">
+                <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
+                  Week of {formatWeek(latest.weekOf)}
+                </span>
+                <span className="text-[0.7rem] text-[#6B7A85]">Latest check-in</span>
               </div>
-            </RevealItem>
-            <RevealItem>
-              <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
-                <CheckinDots label="Energy" value={latest.energy} delay={0.04} />
-              </div>
-            </RevealItem>
-            <RevealItem>
-              <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
-                <CheckinDots label="Stress" value={latest.stress} invert delay={0.08} />
-              </div>
-            </RevealItem>
-            <RevealItem>
-              <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
-                <CheckinDots label="Recovery" value={latest.recovery} delay={0.12} />
-              </div>
-            </RevealItem>
-          </div>
-        </section>
-      </Reveal>
-
-      {/* Check-in history -- glass cards */}
-      <Reveal delay={0.05}>
-        <section className="mb-16">
-          <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] block mb-6">
-            Recent Weeks
-          </span>
-          <div className="space-y-3">
-            {checkins.slice(1).map((c) => (
-              <RevealItem key={c.id}>
-                <div className="flex items-center gap-6 p-5 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)]">
-                  <span className="text-[0.8rem] text-[#6B7A85] w-24 flex-shrink-0 tabular">
-                    {formatWeek(c.weekOf)}
-                  </span>
-                  <div className="flex gap-6 flex-1">
-                    <MiniDots label="Slp" value={c.sleep} />
-                    <MiniDots label="Eng" value={c.energy} />
-                    <MiniDots label="Str" value={c.stress} invert />
-                    <MiniDots label="Rec" value={c.recovery} />
+              <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-4">
+                <RevealItem>
+                  <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
+                    <CheckinDots label="Sleep" value={latest.sleep} delay={0} />
                   </div>
+                </RevealItem>
+                <RevealItem>
+                  <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
+                    <CheckinDots label="Energy" value={latest.energy} delay={0.04} />
+                  </div>
+                </RevealItem>
+                <RevealItem>
+                  <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
+                    <CheckinDots label="Stress" value={latest.stress} invert delay={0.08} />
+                  </div>
+                </RevealItem>
+                <RevealItem>
+                  <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
+                    <CheckinDots label="Recovery" value={latest.recovery} delay={0.12} />
+                  </div>
+                </RevealItem>
+              </div>
+            </section>
+          </Reveal>
+
+          {/* Check-in history -- glass cards */}
+          <Reveal delay={0.05}>
+            <section className="mb-16 xl:mb-0">
+              <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] block mb-6">
+                Recent Weeks
+              </span>
+              <div className="space-y-3">
+                {checkins.slice(1).map((c) => (
+                  <RevealItem key={c.id}>
+                    <div className="flex items-center gap-6 p-5 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)]">
+                      <span className="text-[0.8rem] text-[#6B7A85] w-24 flex-shrink-0 tabular">
+                        {formatWeek(c.weekOf)}
+                      </span>
+                      <div className="flex gap-6 flex-1">
+                        <MiniDots label="Slp" value={c.sleep} />
+                        <MiniDots label="Eng" value={c.energy} />
+                        <MiniDots label="Str" value={c.stress} invert />
+                        <MiniDots label="Rec" value={c.recovery} />
+                      </div>
+                      <div className="hidden md:flex gap-6 text-[0.75rem] text-[#6B7A85] tabular">
+                        <span>{c.sleep}/5</span>
+                        <span>{c.energy}/5</span>
+                        <span>{c.stress}/5</span>
+                        <span>{c.recovery}/5</span>
+                      </div>
+                    </div>
+                  </RevealItem>
+                ))}
+              </div>
+            </section>
+          </Reveal>
+        </div>
+
+        <div>
+          <HairlineDraw className="mb-16 xl:hidden" />
+
+          {/* Biomarkers -- glass card container */}
+          <Reveal delay={0.1}>
+            <section className="mb-16 xl:mb-0">
+              <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-8">
+                <div className="flex items-baseline justify-between mb-8">
+                  <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
+                    Biomarker Panel
+                  </span>
+                  <span className="text-[0.7rem] text-[#6B7A85]">
+                    Drawn {new Date(biomarkers[0].takenAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </span>
                 </div>
-              </RevealItem>
-            ))}
-          </div>
-        </section>
-      </Reveal>
 
-      <HairlineDraw className="mb-16" />
-
-      {/* Biomarkers -- glass card container */}
-      <Reveal delay={0.1}>
-        <section className="mb-16">
-          <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-8">
-            <div className="flex items-baseline justify-between mb-8">
-              <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
-                Biomarker Panel
-              </span>
-              <span className="text-[0.7rem] text-[#6B7A85]">
-                Drawn {new Date(biomarkers[0].takenAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-              </span>
-            </div>
-
-            <ul>
-              {biomarkers.map((b, i) => (
-                <BiomarkerRow key={b.id} b={b} first={i === 0} last={i === biomarkers.length - 1} />
-              ))}
-            </ul>
-          </div>
-        </section>
-      </Reveal>
+                <ul className="lg:grid lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-1">
+                  {biomarkers.map((b, i) => (
+                    <BiomarkerRow key={b.id} b={b} first={i === 0} last={i === biomarkers.length - 1} />
+                  ))}
+                </ul>
+              </div>
+            </section>
+          </Reveal>
+        </div>
+      </div>
 
       {/* Protocol tags as pill badges */}
       <Reveal delay={0.15}>

@@ -62,14 +62,14 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
       />
 
       {/* Glass filter chips */}
-      <div className="flex gap-2.5 mb-12 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+      <div className="flex gap-2 lg:gap-3 mb-12 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {FILTERS.map(({ label, value }) => {
           const active = filter === value;
           return (
             <button
               key={value}
               onClick={() => setFilter(value)}
-              className={`relative px-5 py-2 rounded-full text-[0.7rem] font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all ${
+              className={`relative px-5 py-2 rounded-full text-[0.7rem] lg:text-[0.75rem] font-medium tracking-[0.08em] uppercase whitespace-nowrap transition-all ${
                 active
                   ? "text-white"
                   : "text-[#6B7A85] hover:text-[#1A2935] bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] shadow-[0_2px_24px_rgba(26,41,53,0.06)]"
@@ -102,11 +102,11 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
                   <HairlineDraw className="flex-1" delay={0.1} />
                 </div>
 
-                <div className="space-y-3 pl-0 sm:pl-4">
+                <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0 pl-0 sm:pl-4">
                   {dayEvents.map((evt) => (
                     <RevealItem key={evt.id}>
                       <Magnetic strength={3}>
-                        <div className="group p-5 sm:p-6 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow cursor-pointer">
+                        <div className="group p-5 sm:p-6 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow cursor-pointer h-full">
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2.5 mb-2">
@@ -121,7 +121,7 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
                                 style={{ fontVariationSettings: '"opsz" 20, "SOFT" 50' }}>
                                 {evt.title}
                               </h3>
-                              <p className="text-[0.8rem] text-[#6B7A85] mt-2 line-clamp-2 leading-relaxed">
+                              <p className="text-[0.8rem] text-[#6B7A85] mt-2 line-clamp-1 lg:line-clamp-2 leading-relaxed">
                                 {evt.description}
                               </p>
                               <p className="text-[0.75rem] text-[#6B7A85]/70 mt-2.5">

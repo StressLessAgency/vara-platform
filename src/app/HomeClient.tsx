@@ -60,7 +60,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
     <div className="space-y-14 lg:space-y-20">
       {/* ---- Full-bleed hero with parallax photo ---- */}
       <section className="-mx-5 sm:-mx-8 lg:-mx-12 -mt-8 sm:-mt-12 lg:-mt-16">
-        <div className="relative h-[52vh] sm:h-[58vh] lg:h-[65vh] min-h-[340px]">
+        <div className="relative h-[50vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] min-h-[340px]">
           <ParallaxImage
             src="/vara/photos/p05-img02-1740x899.jpeg"
             alt="Infinity pool at sunset"
@@ -111,40 +111,59 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
         </div>
       </section>
 
-      {/* ---- Wellness pulse in glass cards ---- */}
-      <Reveal>
-        <section>
-          <div className="flex items-baseline justify-between mb-6">
-            <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
-              Your Week
+      {/* ---- xl+ 2-column: intention + wellness ---- */}
+      <div className="xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start space-y-14 xl:space-y-0">
+        {/* Left: greeting + intention (hidden on xl+ since it's in the hero) */}
+        {/* On xl+ this column is just the intention card standalone */}
+        <div className="hidden xl:block">
+          <motion.div
+            className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1], delay: 0.7 }}
+          >
+            <span className="text-[0.6rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] block mb-2">
+              Today's intention
             </span>
-            <Link href="/wellness" className="text-[0.75rem] text-[#4A90A8] hover:text-[#1A2935] transition-colors font-medium">
-              Full report
-            </Link>
-          </div>
+            <IntentionReveal text={intention} />
+          </motion.div>
+        </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {([
-              { label: "Sleep", value: latestCheckin.sleep, suffix: "/5" },
-              { label: "Energy", value: latestCheckin.energy, suffix: "/5" },
-              { label: "Stress", value: latestCheckin.stress, suffix: "/5", invert: true },
-              { label: "Recovery", value: latestCheckin.recovery, suffix: "/5" },
-            ] as const).map((m) => (
-              <RevealItem key={m.label}>
-                <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5 sm:p-6">
-                  <span className="text-[0.6rem] tracking-[0.16em] uppercase font-medium text-[#6B7A85]">
-                    {m.label}
-                  </span>
-                  <p className="display-3 mt-2 text-[#4A90A8]">
-                    <NumberFlow to={m.value} />
-                    <span className="text-[#6B7A85] text-[0.5em] ml-0.5">{m.suffix}</span>
-                  </p>
-                </div>
-              </RevealItem>
-            ))}
-          </div>
-        </section>
-      </Reveal>
+        {/* Right: wellness pulse */}
+        <Reveal>
+          <section>
+            <div className="flex items-baseline justify-between mb-6">
+              <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
+                Your Week
+              </span>
+              <Link href="/wellness" className="text-[0.75rem] text-[#4A90A8] hover:text-[#1A2935] transition-colors font-medium">
+                Full report
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+              {([
+                { label: "Sleep", value: latestCheckin.sleep, suffix: "/5" },
+                { label: "Energy", value: latestCheckin.energy, suffix: "/5" },
+                { label: "Stress", value: latestCheckin.stress, suffix: "/5", invert: true },
+                { label: "Recovery", value: latestCheckin.recovery, suffix: "/5" },
+              ] as const).map((m) => (
+                <RevealItem key={m.label}>
+                  <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5 sm:p-6">
+                    <span className="text-[0.6rem] tracking-[0.16em] uppercase font-medium text-[#6B7A85]">
+                      {m.label}
+                    </span>
+                    <p className="display-3 mt-2 text-[#4A90A8]">
+                      <NumberFlow to={m.value} />
+                      <span className="text-[#6B7A85] text-[0.5em] ml-0.5">{m.suffix}</span>
+                    </p>
+                  </div>
+                </RevealItem>
+              ))}
+            </div>
+          </section>
+        </Reveal>
+      </div>
 
       {/* ---- Upcoming events in glass cards ---- */}
       <Reveal delay={0.1}>
@@ -158,11 +177,11 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
             </Link>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
             {events.map((evt) => (
               <RevealItem key={evt.id}>
                 <Magnetic strength={4}>
-                  <div className="group flex items-start gap-5 p-5 sm:p-6 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow cursor-pointer">
+                  <div className="group flex items-start gap-5 p-5 sm:p-6 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow cursor-pointer h-full">
                     {/* Date block */}
                     <div className="flex-shrink-0 w-14 text-center bg-[#FAFAF8] rounded-2xl py-2.5">
                       <span className="text-[0.6rem] text-[#6B7A85] uppercase tracking-wider block">
@@ -210,7 +229,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
       <Reveal delay={0.15}>
         <section className="grid grid-cols-2 gap-4">
           <Magnetic as="a" href="/concierge" strength={6}
-            className="relative overflow-hidden flex items-center gap-4 p-6 rounded-3xl bg-gradient-to-br from-[#1A2935] to-[#4A90A8] text-white cursor-pointer group shadow-[0_4px_24px_rgba(26,41,53,0.2)]">
+            className="relative overflow-hidden flex items-center gap-4 p-6 xl:p-8 xl:py-10 rounded-3xl bg-gradient-to-br from-[#1A2935] to-[#4A90A8] text-white cursor-pointer group shadow-[0_4px_24px_rgba(26,41,53,0.2)]">
             <span className="text-[1.5rem]" aria-hidden>&#9742;</span>
             <div>
               <span className="text-[0.6rem] tracking-[0.16em] uppercase opacity-60 block">Concierge</span>
@@ -222,7 +241,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
             <span className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500" />
           </Magnetic>
           <Magnetic as="a" href="/community" strength={6}
-            className="relative overflow-hidden flex items-center gap-4 p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] shadow-[0_2px_24px_rgba(26,41,53,0.06)] cursor-pointer group hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow">
+            className="relative overflow-hidden flex items-center gap-4 p-6 xl:p-8 xl:py-10 rounded-3xl bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] shadow-[0_2px_24px_rgba(26,41,53,0.06)] cursor-pointer group hover:shadow-[0_4px_32px_rgba(26,41,53,0.1)] transition-shadow">
             <span className="text-[1.5rem]" aria-hidden>&#9825;</span>
             <div>
               <span className="text-[0.6rem] tracking-[0.16em] uppercase font-medium text-[#4A90A8] block">Community</span>
