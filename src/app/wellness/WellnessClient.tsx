@@ -26,7 +26,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
       />
 
       {/* xl+ 2-column: check-ins left, biomarkers right */}
-      <div className="xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start">
+      <div className="max-w-[1400px] mx-auto xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start">
         <div>
           {/* Current check-in -- glass cards */}
           <Reveal>

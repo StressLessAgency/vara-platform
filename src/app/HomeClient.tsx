@@ -10,13 +10,21 @@ import { NumberFlow } from "@/components/motion/NumberFlow";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ParallaxImage } from "@/components/motion/ParallaxImage";
 import { greetingForHour } from "@/lib/utils";
-import type { Resident, EventItem, Checkin } from "@/lib/types";
+import Image from "next/image";
+import type { Resident, EventItem, Checkin, EventType } from "@/lib/types";
 
 type Props = {
   resident: Resident;
   events: EventItem[];
   intention: string;
   latestCheckin: Checkin;
+};
+
+const EVENT_PHOTOS: Record<EventType, string> = {
+  "Health Session": "/vara/photos/p09-img13-708x367.jpeg",
+  "Master Class": "/vara/photos/p03-img02-855x591.jpeg",
+  "Signature Retreat": "/vara/photos/p11-img09-1150x655.jpeg",
+  "Community Event": "/vara/photos/p06-img08-560x656.jpeg",
 };
 
 function bukitHour(): number {
@@ -59,7 +67,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
   return (
     <div className="space-y-14 lg:space-y-20">
       {/* ---- Full-bleed hero with parallax photo ---- */}
-      <section className="-mx-5 sm:-mx-8 lg:-mx-12 -mt-8 sm:-mt-12 lg:-mt-16">
+      <section className="w-screen relative left-1/2 -translate-x-1/2 -mt-8 sm:-mt-12 lg:-mt-16">
         <div className="relative h-[50vh] md:h-[55vh] lg:h-[60vh] xl:h-[65vh] min-h-[340px]">
           <ParallaxImage
             src="/vara/photos/p05-img02-1740x899.jpeg"
@@ -73,7 +81,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A2935]/80 via-[#1A2935]/30 to-transparent" />
 
           {/* Greeting overlaid on hero */}
-          <div className="absolute inset-x-0 bottom-0 px-5 sm:px-8 lg:px-12 pb-24 sm:pb-28">
+          <div className="absolute inset-x-0 bottom-0 max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 pb-24 sm:pb-28">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -96,7 +104,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
         </div>
 
         {/* AI intention in a glass card floating below the hero */}
-        <div className="relative px-5 sm:px-8 lg:px-12 -mt-14 sm:-mt-16">
+        <div className="relative max-w-[1400px] mx-auto px-5 sm:px-8 lg:px-12 -mt-14 sm:-mt-16">
           <motion.div
             className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-8"
             initial={{ opacity: 0, y: 20 }}
@@ -112,7 +120,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
       </section>
 
       {/* ---- xl+ 2-column: intention + wellness ---- */}
-      <div className="xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start space-y-14 xl:space-y-0">
+      <div className="max-w-[1400px] mx-auto xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start space-y-14 xl:space-y-0">
         {/* Left: greeting + intention (hidden on xl+ since it's in the hero) */}
         {/* On xl+ this column is just the intention card standalone */}
         <div className="hidden xl:block">
@@ -167,7 +175,7 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
 
       {/* ---- Upcoming events in glass cards ---- */}
       <Reveal delay={0.1}>
-        <section>
+        <section className="max-w-[1400px] mx-auto">
           <div className="flex items-baseline justify-between mb-6">
             <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
               Coming Up
@@ -217,6 +225,17 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
                         {evt.rsvpCount}/{evt.capacity}
                       </span>
                     </div>
+
+                    {/* Event photo thumbnail */}
+                    <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-2xl overflow-hidden">
+                      <Image
+                        src={EVENT_PHOTOS[evt.type]}
+                        alt=""
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
                 </Magnetic>
               </RevealItem>
@@ -227,9 +246,9 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
 
       {/* ---- Quick action cards with gradients ---- */}
       <Reveal delay={0.15}>
-        <section className="grid grid-cols-2 gap-4">
+        <section className="max-w-[1400px] mx-auto grid grid-cols-2 gap-4">
           <Magnetic as="a" href="/concierge" strength={6}
-            className="relative overflow-hidden flex items-center gap-4 p-6 xl:p-8 xl:py-10 rounded-3xl bg-gradient-to-br from-[#1A2935] to-[#4A90A8] text-white cursor-pointer group shadow-[0_4px_24px_rgba(26,41,53,0.2)]">
+            className="shimmer-overlay relative overflow-hidden flex items-center gap-4 p-6 xl:p-8 xl:py-10 rounded-3xl bg-gradient-to-br from-[#1A2935] to-[#4A90A8] text-white cursor-pointer group shadow-[0_4px_24px_rgba(26,41,53,0.2)]">
             <span className="text-[1.5rem]" aria-hidden>&#9742;</span>
             <div>
               <span className="text-[0.6rem] tracking-[0.16em] uppercase opacity-60 block">Concierge</span>

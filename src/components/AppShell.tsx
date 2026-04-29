@@ -26,10 +26,14 @@ export function AppShell({ children }: { children: ReactNode }) {
       >
         <Link
           href="/"
-          className="font-serif text-[var(--color-ink)] text-[1.1rem] tracking-tight leading-none"
-          style={{ fontVariationSettings: '"opsz" 36, "SOFT" 50', writingMode: "vertical-rl", textOrientation: "mixed" }}
+          className="flex flex-col items-center gap-2"
         >
-          VARA
+          {/* V monogram */}
+          <span className="font-serif text-[1.4rem] text-[var(--color-accent)] leading-none" style={{ fontVariationSettings: '"opsz" 96, "SOFT" 50' }}>V</span>
+          {/* Wordmark */}
+          <span className="font-serif text-[0.7rem] tracking-[0.22em] text-[var(--color-ink)] leading-none" style={{ fontVariationSettings: '"opsz" 36, "SOFT" 50' }}>VARA</span>
+          {/* Accent line */}
+          <span className="w-6 h-px bg-[var(--color-hairline-strong)]" />
         </Link>
 
         <div className="flex flex-col gap-1.5 items-center">
@@ -63,7 +67,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       {/* Main content */}
       <main className="flex-1 md:ml-[72px] xl:ml-[80px] pb-28 md:pb-0">
-        <div className="mx-auto max-w-[1400px] px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20 pt-8 sm:pt-12 md:pt-14 lg:pt-16">
+        <div className="px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20 pt-8 sm:pt-12 md:pt-14 lg:pt-16">
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}

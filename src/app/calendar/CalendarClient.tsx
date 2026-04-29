@@ -62,7 +62,7 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
       />
 
       {/* Glass filter chips */}
-      <div className="flex gap-2 lg:gap-3 mb-12 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+      <div className="max-w-[1400px] mx-auto flex gap-2 lg:gap-3 mb-12 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
         {FILTERS.map(({ label, value }) => {
           const active = filter === value;
           return (
@@ -91,7 +91,7 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
 
       {/* Timeline */}
       <AnimatePresence mode="popLayout">
-        <div className="space-y-14">
+        <div className="max-w-[1400px] mx-auto space-y-14">
           {Array.from(grouped.entries()).map(([date, dayEvents], gi) => (
             <Reveal key={date} delay={gi * 0.06}>
               <div>
