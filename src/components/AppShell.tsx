@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Magnetic } from "./motion/Magnetic";
 import { HairlineDraw } from "./motion/HairlineDraw";
 import { RouteTransitionOverlay } from "./motion/RouteTransitionOverlay";
@@ -155,25 +155,24 @@ export function AppShell({ children }: { children: ReactNode }) {
         <style>{`@media (min-width: 1024px) { :root { --sidebar-width: ${SIDEBAR_WIDTH}px; } }`}</style>
         <div className="layout-frame pt-8 sm:pt-12 md:pt-10 lg:pt-14">
           {/*
-            Quiet page transition. Subtle 220ms cross-fade with a 4px rise.
-            No blur (causes GPU layer to persist on enter), no curtain,
-            no overlay copy — content lands immediately.
+            Children render directly. The RouteTransitionOverlay scribes
+            a single 1px gold hairline across the top on route change as
+            a quiet page-seam. Inner content reveals via each surface's
+            own Reveal/RevealItem stagger so the page feels alive without
+            any layout-level wrapper that risked stalling client-side nav.
           */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={pathname}
-              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduced ? { opacity: 0 } : { opacity: 0 }}
-              transition={
-                reduced
-                  ? { duration: 0.14, ease: "linear" }
-                  : { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }
-              }
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            key={pathname}
+            initial={reduced ? { opacity: 0 } : { opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              reduced
+                ? { duration: 0.14, ease: "linear" }
+                : { duration: 0.28, ease: [0.22, 0.61, 0.36, 1] }
+            }
+          >
+            {children}
+          </motion.div>
         </div>
       </main>
 
