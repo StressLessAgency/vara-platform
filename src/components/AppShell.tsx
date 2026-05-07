@@ -70,8 +70,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           {NAV_ITEMS.map(({ href, label, icon: Icon, description }) => {
             const active = pathname === href;
             return (
-              <Magnetic key={href} as="a" href={href} strength={4} ariaLabel={label}
-                className={`relative flex items-center gap-3.5 px-3 py-3 rounded-2xl transition-all duration-200 group ${
+              <Link key={href} href={href} aria-label={label} className="block">
+              <Magnetic as="div" strength={4}
+                className={`relative flex items-center gap-3.5 px-3 py-3 rounded-2xl transition-all duration-200 group cursor-pointer ${
                   active
                     ? "text-[var(--color-accent)]"
                     : "text-[var(--color-ink-mute)] hover:text-[var(--color-ink-soft)] hover:bg-[var(--color-accent-wash)]"
@@ -116,6 +117,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                   />
                 )}
               </Magnetic>
+              </Link>
             );
           })}
         </div>
