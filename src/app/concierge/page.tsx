@@ -13,7 +13,7 @@ export default function Concierge() {
         eyebrow="Concierge"
         title="We handle it"
         subtitle="Restaurants, transport, in-villa requests, and anything else. Reply within the hour."
-        heroImage="/vara/photos/p12-img03-1002x755.jpeg"
+        heroImage="/vara/photos/vara-concierge-hero.jpg"
       />
 
       <div className="layout-frame-flush lg:grid lg:grid-cols-[3fr_2fr] lg:gap-10 xl:gap-12 2xl:gap-16">

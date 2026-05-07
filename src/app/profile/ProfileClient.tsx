@@ -89,7 +89,7 @@ export function ProfileClient({ resident, checkins, events, myTeam }: Props) {
       <section className="bleed -mt-8 sm:-mt-12 lg:-mt-16">
         <div className="relative h-[44vh] md:h-[46vh] lg:h-[52vh] xl:h-[58vh] min-h-[340px]">
           <ParallaxImage
-            src="/vara/photos/p05-img02-1740x899.jpeg"
+            src="/vara/photos/vara-today-hero.jpg"
             alt=""
             className="absolute inset-0 h-full w-full"
             priority

@@ -10,5 +10,17 @@
       "quality": 0.85
     },
     "createdAt": 1778145338601
+  },
+  {
+    "id": "task-task_1778146699715_t1lgj1",
+    "key": "task_1778146699715_t1lgj1",
+    "content": "Task completed: task_1778146699715_t1lgj1",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778146700935
   }
 ]

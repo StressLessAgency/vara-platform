@@ -26,10 +26,10 @@ type Props = {
 };
 
 const EVENT_PHOTOS: Record<EventType, string> = {
-  "Health Session": "/vara/photos/p09-img13-708x367.jpeg",
-  "Master Class": "/vara/photos/p03-img02-855x591.jpeg",
-  "Signature Retreat": "/vara/photos/p11-img09-1150x655.jpeg",
-  "Community Event": "/vara/photos/p06-img08-560x656.jpeg",
+  "Health Session": "/vara/photos/vara-event-health.jpg",
+  "Master Class": "/vara/photos/vara-event-masterclass.jpg",
+  "Signature Retreat": "/vara/photos/vara-event-retreat.jpg",
+  "Community Event": "/vara/photos/vara-event-community.jpg",
 };
 
 function bukitHour(): number {
@@ -102,8 +102,8 @@ export function HomeClient({ resident, events, intention, latestCheckin }: Props
       <section className="bleed -mt-8 sm:-mt-12 lg:-mt-16">
         <div className="relative h-[56vh] md:h-[58vh] lg:h-[62vh] xl:h-[68vh] min-h-[380px]">
           <ParallaxImage
-            src="/vara/photos/p05-img02-1740x899.jpeg"
-            alt="Infinity pool at sunset"
+            src="/vara/photos/vara-today-hero.jpg"
+            alt="Bukit Peninsula pool ledge at first light"
             className="absolute inset-0 h-full w-full"
             priority
             speed={0.14}

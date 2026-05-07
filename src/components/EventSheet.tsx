@@ -6,10 +6,10 @@ import type { EventItem, EventType } from "@/lib/types";
 import { duration, ease } from "@/lib/motion-config";
 
 const EVENT_PHOTOS: Record<EventType, string> = {
-  "Health Session": "/vara/photos/p09-img13-708x367.jpeg",
-  "Master Class": "/vara/photos/p03-img02-855x591.jpeg",
-  "Signature Retreat": "/vara/photos/p11-img09-1150x655.jpeg",
-  "Community Event": "/vara/photos/p06-img08-560x656.jpeg",
+  "Health Session": "/vara/photos/vara-event-health.jpg",
+  "Master Class": "/vara/photos/vara-event-masterclass.jpg",
+  "Signature Retreat": "/vara/photos/vara-event-retreat.jpg",
+  "Community Event": "/vara/photos/vara-event-community.jpg",
 };
 
 function formatTime(iso: string): string {

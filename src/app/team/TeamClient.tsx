@@ -54,7 +54,7 @@ export function TeamClient({ staff }: Props) {
         }
         subtitle="Names, shifts, languages. The team you can call by name by month two."
         meta={`${onShiftCount} of ${staff.length} on shift now`}
-        heroImage="/vara/photos/p07-img02-1740x899.jpeg"
+        heroImage="/vara/photos/vara-community-hero.jpg"
       />
 
       {/* Filter row */}

@@ -19,10 +19,10 @@ const FILTERS: Array<{ label: string; value: EventType | "All" }> = [
 ];
 
 const EVENT_PHOTOS: Record<EventType, string> = {
-  "Health Session": "/vara/photos/p09-img13-708x367.jpeg",
-  "Master Class": "/vara/photos/p03-img02-855x591.jpeg",
-  "Signature Retreat": "/vara/photos/p11-img09-1150x655.jpeg",
-  "Community Event": "/vara/photos/p06-img08-560x656.jpeg",
+  "Health Session": "/vara/photos/vara-event-health.jpg",
+  "Master Class": "/vara/photos/vara-event-masterclass.jpg",
+  "Signature Retreat": "/vara/photos/vara-event-retreat.jpg",
+  "Community Event": "/vara/photos/vara-event-community.jpg",
 };
 
 function formatTime(iso: string): string {
@@ -68,7 +68,7 @@ export function CalendarClient({ events }: { events: EventItem[] }) {
         title="What's ahead"
         subtitle="Events, retreats, and sessions across the property."
         meta={`${events.length} upcoming`}
-        heroImage="/vara/photos/p07-img02-1740x899.jpeg"
+        heroImage="/vara/photos/vara-calendar-hero.jpg"
       />
 
       {/* Filter chips -- centered on desktop, scrollable on mobile */}

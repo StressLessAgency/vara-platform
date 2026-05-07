@@ -24,7 +24,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
         eyebrow="Wellness"
         title={<>How you are feeling</>}
         subtitle="Self-reported check-ins and lab biomarkers from your onboarding panel."
-        heroImage="/vara/photos/p10-img01-1740x899.jpeg"
+        heroImage="/vara/photos/vara-wellness-hero.jpg"
       />
 
       <div className="layout-frame-flush">
