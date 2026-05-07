@@ -58,5 +58,17 @@
       "quality": 0.85
     },
     "createdAt": 1778152844673
+  },
+  {
+    "id": "task-task_1778153511705_58pnib",
+    "key": "task_1778153511705_58pnib",
+    "content": "Task completed: task_1778153511705_58pnib",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778153512447
   }
 ]

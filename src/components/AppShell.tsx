@@ -155,32 +155,20 @@ export function AppShell({ children }: { children: ReactNode }) {
         <style>{`@media (min-width: 1024px) { :root { --sidebar-width: ${SIDEBAR_WIDTH}px; } }`}</style>
         <div className="layout-frame pt-8 sm:pt-12 md:pt-10 lg:pt-14">
           {/*
-            Quiet page transition. Old page exits fast (180ms blur+fade),
-            new page enters with a subtle rise + soft blur clear (320ms).
-            No curtain, no overlay copy — information lands immediately,
-            with just enough motion to feel intentional.
+            Quiet page transition. Subtle 220ms cross-fade with a 4px rise.
+            No blur (causes GPU layer to persist on enter), no curtain,
+            no overlay copy — content lands immediately.
           */}
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={
-                reduced
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: 6, filter: "blur(4px)" }
-              }
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={
-                reduced
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -3, filter: "blur(2px)" }
-              }
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0 }}
               transition={
                 reduced
                   ? { duration: 0.14, ease: "linear" }
-                  : {
-                      duration: 0.32,
-                      ease: [0.22, 0.61, 0.36, 1],
-                    }
+                  : { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }
               }
             >
               {children}
