@@ -14,7 +14,16 @@ PORT=3030 npm run dev
 
 ## Env
 
-Copy `.env.example` to `.env.local` and set `ANTHROPIC_API_KEY` to enable real AI surfaces. Without a valid key, Home daily intention falls back to curated copy and Concierge triage uses a stock reply. Demo runs without it.
+`.env.local` is committed locally with two flags:
+
+- `NEXT_PUBLIC_PITCH_MODE=1` — forces seeded intentions + canned concierge triage for the May 11 pitch. Set to `0` for tech-review meetings where live Anthropic calls are wanted.
+- `ANTHROPIC_API_KEY=...` — required when pitch mode is off. Without a key, the app falls back to curated rotation; nothing breaks.
+
+## Pitch quick reference
+
+- The Morning Unfurl fires once per Bukit-day. Force replay with `?unfurl=1` or `localStorage.clear()`.
+- Demo script: `vault/vara/_handoffs/2026-05-11-pitch-demo-script.md`.
+- Roadmap leave-behind: `vault/vara/playbooks/2026-05-05-platform-roadmap-v1.md`.
 
 ## Surfaces
 
@@ -41,11 +50,14 @@ Tokens live in `src/app/globals.css` and mirror `../../brand/system/tokens.json`
 
 ## Where to expand next
 
-1. Replace placeholder portrait/avatar gradients with real imagery once Track 1 captures land.
-2. Wire Supabase auth + connect seed data to real tables (`schema/01_initial.sql` + `schema/02_rls.sql` ready to apply).
-3. Stripe Checkout on one calendar event end-to-end.
-4. Wellness chart can become a small SVG history view rather than the optimal-range bar.
-5. Community "send a note" should open a real thread, not a button placeholder.
+Post-sign, in order. See the year-one roadmap for the chapter framing.
+
+1. Apply `schema/01_initial.sql` + `schema/02_rls.sql` to a fresh Supabase project. Wire magic-link auth.
+2. Generate the 16 sky photos per `public/vara/sky/PROMPTS.md` and drop them in. The `lib/sky.ts` helper reads them automatically.
+3. Replace seeded resident + concierge data with real tables. Keep `seed.ts` as the offline fallback for stage demos.
+4. Real-time concierge channel via Supabase realtime. The `LiveThread` component is already shaped for it; swap the `setTimeout` chain for channel subscription.
+5. Wellness biomarker arc as topographic SVG line (chapter 03 of roadmap).
+6. Household / linked profiles (chapter 01 of roadmap).
 
 ## Schema
 - `../schema/01_initial.sql` — tables for residents, events, RSVPs, wellness, concierge, staff, audit log.

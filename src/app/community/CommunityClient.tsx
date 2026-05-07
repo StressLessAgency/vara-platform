@@ -1,6 +1,6 @@
 "use client";
 
-import { Reveal, RevealItem } from "@/components/motion/Reveal";
+import { StaggerGrid, StaggerItem, ScrollReveal } from "@/components/motion/ScrollReveal";
 import { HairlineDraw } from "@/components/motion/HairlineDraw";
 import { ResidentCard } from "./ResidentCard";
 import type { Resident } from "@/lib/types";
@@ -29,7 +29,7 @@ const DEMO_RESIDENTS: Resident[] = [
   {
     id: "res_005", name: "Priya Mehta", villa: "Villa Surya 5", villaCollection: "Vantara",
     joinedAt: "2026-02-28", protocolTags: ["longevity-core"], interests: ["Ayurveda", "trail running", "cooking"],
-    bio: "Built three hospitality brands in India. Here to learn what luxury longevity feels like from the inside.", preOpening: true, avatarSeed: "priya-surya",
+    bio: "Built three hospitality brands in India. Here to live the longevity lifestyle from the inside.", preOpening: true, avatarSeed: "priya-surya",
   },
   {
     id: "res_006", name: "Stefan Weber", villa: "Villa Angin 1", villaCollection: "Signature",
@@ -38,24 +38,38 @@ const DEMO_RESIDENTS: Resident[] = [
   },
 ];
 
-export function CommunityClient({ currentResident }: { currentResident: Resident }) {
+export function CommunityClient({ currentResident: _ }: { currentResident: Resident }) {
   return (
-    <Reveal>
-      <ul className="max-w-[1400px] mx-auto grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <div>
+      {/* Pre-opening framing — written like a host introducing the room. */}
+      <ScrollReveal preset="fade">
+        <div className="layout-frame-flush mb-10 lg:mb-14 max-w-[60ch]">
+          <p
+            className="font-serif italic text-[1.1rem] sm:text-[1.25rem] lg:text-[1.4rem] text-[var(--color-ink-soft)] leading-snug"
+            style={{ fontVariationSettings: '"opsz" 24, "SOFT" 100' }}
+          >
+            Construction completes Q4 2026. Until then, these are the people moving in with you. Some of them you may already know.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      <StaggerGrid className="layout-frame-flush grid gap-4 md:gap-5 lg:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {DEMO_RESIDENTS.map((r) => (
-          <RevealItem key={r.id}>
+          <StaggerItem key={r.id}>
             <ResidentCard r={r} preOpening={r.preOpening} />
-          </RevealItem>
+          </StaggerItem>
         ))}
-      </ul>
+      </StaggerGrid>
 
       <HairlineDraw className="mt-14" />
 
-      <div className="text-center py-14">
-        <p className="body-serif text-[#6B7A85] text-[1.1rem]">
-          More residents join as we approach opening.
-        </p>
-      </div>
-    </Reveal>
+      <ScrollReveal preset="fade" delay={0.2}>
+        <div className="text-center py-14">
+          <p className="body-serif text-[var(--color-ink-soft)] text-[1.1rem]">
+            More residents join as we approach opening.
+          </p>
+        </div>
+      </ScrollReveal>
+    </div>
   );
 }

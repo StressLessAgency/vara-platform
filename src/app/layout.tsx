@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { AppShell } from "@/components/AppShell";
 import { AmbientBackdrop } from "@/components/motion/AmbientBackdrop";
-import { Cursor } from "@/components/motion/Cursor";
-import { OpeningCeremony } from "@/components/motion/OpeningCeremony";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { TimeOfDayPalette } from "@/components/TimeOfDayPalette";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -38,9 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--color-bg)]">
-        <OpeningCeremony />
+        <TimeOfDayPalette />
         <AmbientBackdrop />
-        <Cursor />
+        <ScrollProgress />
         <AppShell>{children}</AppShell>
       </body>
     </html>

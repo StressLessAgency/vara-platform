@@ -6,6 +6,7 @@ import { duration, ease, stagger } from "@/lib/motion-config";
 type Props = {
   text: string;
   italicTokens?: string[];           // tokens to render in italic + ocean color
+  italicColor?: string;              // override italic token color (default: --color-ocean-deep)
   className?: string;
   startDelay?: number;
 };
@@ -13,7 +14,7 @@ type Props = {
 // Fraunces variable axes (opsz, SOFT, wght) animate per-letter as the heading
 // enters. Letters bloom from a "soft" state to "settled."
 // Letters that match italicTokens render with italic + ocean accent.
-export function MorphHeading({ text, italicTokens = [], className = "", startDelay = 0 }: Props) {
+export function MorphHeading({ text, italicTokens = [], italicColor = "var(--color-ocean-deep)", className = "", startDelay = 0 }: Props) {
   const reduced = useReducedMotion();
   const tokens = text.split(/(\s+)/); // preserve whitespace as own tokens
   let letterIndex = 0;
@@ -27,7 +28,7 @@ export function MorphHeading({ text, italicTokens = [], className = "", startDel
           <span
             key={`tok-${ti}`}
             className={`inline-block whitespace-nowrap ${isItalic ? "font-serif" : ""}`}
-            style={isItalic ? { fontStyle: "italic", color: "var(--color-ocean-deep)" } : undefined}
+            style={isItalic ? { fontStyle: "italic", color: italicColor } : undefined}
           >
             {[...tok].map((ch) => {
               const idx = letterIndex++;

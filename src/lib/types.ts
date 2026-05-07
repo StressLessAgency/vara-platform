@@ -51,6 +51,29 @@ export type Biomarker = {
   optimalHigh: number;
 };
 
+export type StaffDepartment =
+  | "Wellness"
+  | "Kitchen"
+  | "Concierge"
+  | "Community"
+  | "Operations";
+
+export type StaffShiftStatus = "on" | "off" | "responding";
+
+export type StaffMember = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  department: StaffDepartment;
+  tenureYears: number;
+  languages: string[];
+  bioOneLine: string;     // human, non-cv: "grew up surfing the cliff below the resort"
+  shift: StaffShiftStatus;
+  photoSeed: string;      // initials/seed for placeholder avatar
+  isOliviasTeam?: boolean; // surfaces in Profile → My team
+};
+
 export type ConciergeRequestStatus = "pending" | "in_progress" | "resolved";
 
 export type ConciergeRequest = {

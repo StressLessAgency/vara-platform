@@ -28,19 +28,8 @@ export function AmbientBackdrop() {
           radial-gradient(120% 90% at 80% 100%, ${palette.warm} 0%, transparent 65%),
           linear-gradient(180deg, ${palette.body} 0%, var(--color-bg) 60%)
         `,
-        transition: "background 60s linear",
       }}
-    >
-      {/* Subtle film grain. CSS-only, GPU-cheap. */}
-      <div
-        className="absolute inset-0 opacity-[0.035] mix-blend-multiply"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(15,42,61,1) 1px, transparent 1.5px)",
-          backgroundSize: "3px 3px",
-        }}
-      />
-    </div>
+    />
   );
 }
 

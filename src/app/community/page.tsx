@@ -10,7 +10,7 @@ export default function Community() {
         title="Your neighbors"
         subtitle="Pre-opening residents building the founding culture of VARA."
         meta="12 residents"
-        heroImage="/vara/photos/p06-img05-2375x1288.jpeg"
+        heroImage="/vara/photos/p07-img02-1740x899.jpeg"
       />
       <CommunityClient currentResident={resident} />
     </div>

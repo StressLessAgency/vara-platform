@@ -5,6 +5,8 @@ import { Reveal, RevealItem } from "@/components/motion/Reveal";
 import { HairlineDraw } from "@/components/motion/HairlineDraw";
 import { CheckinDots } from "./CheckinDots";
 import { BiomarkerRow } from "./BiomarkerRow";
+import { DrVasinCard } from "./DrVasinCard";
+import { BrechkaJourney } from "./BrechkaJourney";
 import type { Checkin, Biomarker } from "@/lib/types";
 
 type Props = {
@@ -25,8 +27,15 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
         heroImage="/vara/photos/p10-img01-1740x899.jpeg"
       />
 
+      <div className="layout-frame-flush">
+        <DrVasinCard
+          dated="Monday morning"
+          note={vasinNoteFor(latest)}
+        />
+      </div>
+
       {/* xl+ 2-column: check-ins left, biomarkers right */}
-      <div className="max-w-[1400px] mx-auto xl:grid xl:grid-cols-2 xl:gap-12 xl:items-start">
+      <div className="layout-frame-flush lg:grid lg:grid-cols-2 lg:gap-10 xl:gap-12 2xl:gap-16 lg:items-start">
         <div>
           {/* Current check-in -- glass cards */}
           <Reveal>
@@ -37,7 +46,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
                 </span>
                 <span className="text-[0.7rem] text-[#6B7A85]">Latest check-in</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 2xl:grid-cols-4 gap-4 lg:gap-5">
                 <RevealItem>
                   <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-5">
                     <CheckinDots label="Sleep" value={latest.sleep} delay={0} />
@@ -64,7 +73,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
 
           {/* Check-in history -- glass cards */}
           <Reveal delay={0.05}>
-            <section className="mb-16 xl:mb-0">
+            <section className="mb-16 lg:mb-0">
               <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] block mb-6">
                 Recent Weeks
               </span>
@@ -96,11 +105,11 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
         </div>
 
         <div>
-          <HairlineDraw className="mb-16 xl:hidden" />
+          <HairlineDraw className="mb-16 lg:hidden" />
 
           {/* Biomarkers -- glass card container */}
           <Reveal delay={0.1}>
-            <section className="mb-16 xl:mb-0">
+            <section className="mb-16 lg:mb-0">
               <div className="bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)] p-6 sm:p-8">
                 <div className="flex items-baseline justify-between mb-8">
                   <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8]">
@@ -111,7 +120,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
                   </span>
                 </div>
 
-                <ul className="lg:grid lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-1">
+                <ul className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:grid-cols-1 2xl:grid-cols-2 2xl:gap-x-10">
                   {biomarkers.map((b, i) => (
                     <BiomarkerRow key={b.id} b={b} first={i === 0} last={i === biomarkers.length - 1} />
                   ))}
@@ -122,26 +131,31 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
         </div>
       </div>
 
-      {/* Protocol tags as pill badges */}
+      {/* Brechka protocol journey */}
       <Reveal delay={0.15}>
-        <section>
-          <span className="text-[0.65rem] tracking-[0.18em] uppercase font-medium text-[#4A90A8] block mb-5">
-            Active Protocols
-          </span>
-          <div className="flex flex-wrap gap-2.5">
-            {protocolTags.map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-1.5 rounded-full text-[0.7rem] font-medium tracking-wide text-[#4A90A8] bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.2)] shadow-[0_1px_8px_rgba(26,41,53,0.04)] uppercase"
-              >
-                {tag.replace(/-/g, " ")}
-              </span>
-            ))}
-          </div>
+        <section className="layout-frame-flush mt-4">
+          <BrechkaJourney />
         </section>
       </Reveal>
     </div>
   );
+}
+
+// Note generator. Reads the latest check-in and surfaces a quietly observed
+// remark from the wellness lead. In production this comes from the wellness
+// team app; for the pitch the heuristic produces a plausible note given any
+// seeded check-in.
+function vasinNoteFor(c: Checkin): string {
+  if (c.recovery >= 4 && c.sleep >= 4) {
+    return "Recovery is climbing. Hold the rhythm one more week before we change anything. The cliff breathwork is doing its work.";
+  }
+  if (c.stress >= 4) {
+    return "The week was heavier than the body wanted. Skip the cold plunge this week, sit with the warm sauna instead. We will look at evening glycine again.";
+  }
+  if (c.energy <= 2) {
+    return "Energy ran low. We tried two changes at once. Pull the second one back, give the first another week, and write to me Friday.";
+  }
+  return "Quiet week, by the look of it. That is the practice. Keep the morning ritual unchanged. We will draw blood again at the end of the month.";
 }
 
 function formatWeek(iso: string): string {

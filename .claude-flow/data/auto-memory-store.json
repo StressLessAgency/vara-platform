@@ -1,0 +1,14 @@
+[
+  {
+    "id": "task-task_1778145337873_29bwg7",
+    "key": "task_1778145337873_29bwg7",
+    "content": "Task completed: task_1778145337873_29bwg7",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778145338601
+  }
+]

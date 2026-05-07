@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* Mobile-aware blur radius. Backdrop-filter is the single biggest scroll cost
+   on phones; we keep it generous on hover-capable devices and dial it back
+   sharply on touch. Visual register stays glassy without the GPU tax. */
+:root {
+  --bd-blur: 16px;
+  --bd-blur-strong: 28px;
+}
+@media (hover: none) {
+  :root {
+    --bd-blur: 8px;
+    --bd-blur-strong: 12px;
+  }
+  /* Cap inline Tailwind backdrop-blur utilities on touch — many components
+     use backdrop-blur-xl directly and would otherwise pay the desktop cost. */
+  [class*="backdrop-blur-"] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+}
+
 /* VARA brand v1 -- deck-matched visual system
    Warm glassmorphic luxury. Tokens shared with /brand/system/tokens.json.
 */
@@ -57,8 +77,8 @@ html, body {
 @layer utilities {
   .glass-card {
     background: rgba(255, 255, 255, 0.80);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(var(--bd-blur));
+    -webkit-backdrop-filter: blur(var(--bd-blur));
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-card);
     box-shadow: 0 2px 24px var(--color-card-shadow);
@@ -72,8 +92,8 @@ html, body {
   }
   .glass-card-hover {
     background: rgba(255, 255, 255, 0.80);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(var(--bd-blur));
+    -webkit-backdrop-filter: blur(var(--bd-blur));
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-card);
     box-shadow: 0 2px 24px var(--color-card-shadow);
@@ -84,9 +104,9 @@ html, body {
     border-color: var(--color-hairline-strong);
   }
   .glass-nav {
-    background: rgba(255, 255, 255, 0.70);
-    backdrop-filter: blur(40px) saturate(1.4);
-    -webkit-backdrop-filter: blur(40px) saturate(1.4);
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(var(--bd-blur-strong)) saturate(1.3);
+    -webkit-backdrop-filter: blur(var(--bd-blur-strong)) saturate(1.3);
     border: 1px solid var(--color-hairline);
   }
   .pill-badge {
@@ -102,8 +122,8 @@ html, body {
     font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--color-ink-soft);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--bd-blur));
+    -webkit-backdrop-filter: blur(var(--bd-blur));
   }
   .pill-badge-accent {
     display: inline-flex;
@@ -142,7 +162,7 @@ html, body {
   .display-1 {
     font-family: var(--font-serif);
     font-weight: 300;
-    font-size: clamp(1.75rem, 4.5vw, 5rem);
+    font-size: clamp(1.875rem, 4.5vw, 5rem);
     line-height: 0.98;
     letter-spacing: var(--tracking-tight);
     font-variation-settings: "opsz" 96, "SOFT" 50;
@@ -173,65 +193,122 @@ html, body {
   .hairline-strong-x { background: var(--color-hairline-strong); height: 1px; width: 100%; }
 }
 
-/* shimmer animation for premium CTA cards */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%) translateY(-100%) rotate(25deg);
+@layer utilities {
+  /* shimmer-overlay is retained as a no-op so existing class consumers stay
+     valid. The infinite animation was a perf cost without enough payoff. */
+  .shimmer-overlay { position: relative; overflow: hidden; }
+}
+
+/* scrollbar-hide utility for horizontal scroll areas */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  100% {
-    transform: translateX(100%) translateY(100%) rotate(25deg);
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
+/* smooth momentum scrolling for touch devices */
 @layer utilities {
-  .shimmer-overlay {
-    position: relative;
-    overflow: hidden;
-  }
-  .shimmer-overlay::after {
-    content: "";
-    position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0.12) 50%,
-      rgba(255, 255, 255, 0) 60%,
-      transparent 100%
-    );
-    animation: shimmer 8s ease-in-out infinite;
-    pointer-events: none;
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
   }
 }
 
-/* responsive layout utilities */
+/* tap feedback for interactive elements on mobile */
 @layer utilities {
-  .container-wide {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .tap-feedback {
+    transition: transform 0.1s ease;
+  }
+  .tap-feedback:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ================================================================
+   LAYOUT GRID SYSTEM
+   --gutter provides breathing room at edges; --content-max caps the
+   content column on wide displays so the page reads as composed,
+   not stranded. Bleed sections still span the full viewport.
+   ================================================================ */
+:root {
+  --gutter: 1.25rem;  /* 20px  375px phone */
+  --content-max: 100%;
+}
+@media (min-width: 640px)  { :root { --gutter: 1.5rem; } }    /* 24px  sm */
+@media (min-width: 768px)  { :root { --gutter: 2rem; } }      /* 32px  md / iPad portrait */
+@media (min-width: 1024px) { :root { --gutter: 2.5rem; --content-max: 960px; } }
+@media (min-width: 1280px) { :root { --gutter: 3rem;   --content-max: 1100px; } }
+@media (min-width: 1536px) { :root { --gutter: 3.5rem; --content-max: 1240px; } }
+@media (min-width: 1920px) { :root { --gutter: 4rem;   --content-max: 1320px; } }
+@media (min-width: 2560px) { :root { --gutter: 6rem;   --content-max: 1440px; } }
+
+@layer utilities {
+  /* Main content wrapper. Gutter padding + capped width on lg+. */
+  .layout-frame {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+    width: 100%;
+    max-width: calc(var(--content-max) + 2 * var(--gutter));
+    margin-inline: auto;
+  }
+  /* Inner sections inherit the parent's constrained width. */
+  .layout-frame-flush {
     width: 100%;
   }
-  .px-responsive {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-  @media (min-width: 640px) {
-    .px-responsive { padding-left: 2rem; padding-right: 2rem; }
-  }
-  @media (min-width: 768px) {
-    .px-responsive { padding-left: 2.5rem; padding-right: 2.5rem; }
+  /* Full-bleed breakout. Spans the content area edge-to-edge, accounting for sidebar.
+     On mobile (no sidebar): uses 100vw.
+     On lg+ (sidebar visible): uses calc(100vw - sidebar). */
+  .bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 0;
   }
   @media (min-width: 1024px) {
-    .px-responsive { padding-left: 3rem; padding-right: 3rem; }
+    .bleed {
+      width: calc(100vw - var(--sidebar-width, 0px));
+      left: calc(50%);
+    }
   }
-  @media (min-width: 1280px) {
-    .px-responsive { padding-left: 4rem; padding-right: 4rem; }
+}
+
+@layer utilities {
+  .gradient-border-wrap { position: relative; isolation: isolate; }
+}
+
+/* Scroll progress bar. Two implementations live in the DOM. The CSS one is
+   driven by `scroll-timeline`, costing zero JS per scroll frame. The JS one
+   is the fallback motion.div in ScrollProgress.tsx. The browser hides
+   whichever it can't run. */
+@keyframes vara-scroll-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.vara-scroll-progress-css { display: none; }
+.vara-scroll-progress-js  { display: block; }
+
+@supports (animation-timeline: scroll()) {
+  .vara-scroll-progress-css {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 50;
+    pointer-events: none;
+    transform-origin: left center;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--color-gold-dim), var(--color-gold), var(--color-accent));
+    animation: vara-scroll-progress linear forwards;
+    animation-timeline: scroll(root);
   }
-  @media (min-width: 1536px) {
-    .px-responsive { padding-left: 5rem; padding-right: 5rem; }
-  }
+  .vara-scroll-progress-js { display: none; }
 }
