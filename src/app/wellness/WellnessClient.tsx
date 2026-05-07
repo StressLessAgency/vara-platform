@@ -80,21 +80,15 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
               <div className="space-y-3">
                 {checkins.slice(1).map((c) => (
                   <RevealItem key={c.id}>
-                    <div className="flex items-center gap-6 p-5 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)]">
-                      <span className="text-[0.8rem] text-[#6B7A85] w-24 flex-shrink-0 tabular">
+                    <div className="flex items-center gap-4 sm:gap-5 p-4 sm:p-5 bg-white/80 backdrop-blur-xl border border-[rgba(74,144,168,0.12)] rounded-3xl shadow-[0_2px_24px_rgba(26,41,53,0.06)]">
+                      <span className="text-[0.75rem] sm:text-[0.8rem] text-[#6B7A85] w-16 sm:w-20 flex-shrink-0 tabular">
                         {formatWeek(c.weekOf)}
                       </span>
-                      <div className="flex gap-6 flex-1">
+                      <div className="grid grid-cols-2 sm:flex sm:flex-1 sm:justify-between gap-3 sm:gap-5 flex-1 min-w-0">
                         <MiniDots label="Slp" value={c.sleep} />
                         <MiniDots label="Eng" value={c.energy} />
                         <MiniDots label="Str" value={c.stress} invert />
                         <MiniDots label="Rec" value={c.recovery} />
-                      </div>
-                      <div className="hidden md:flex gap-6 text-[0.75rem] text-[#6B7A85] tabular">
-                        <span>{c.sleep}/5</span>
-                        <span>{c.energy}/5</span>
-                        <span>{c.stress}/5</span>
-                        <span>{c.recovery}/5</span>
                       </div>
                     </div>
                   </RevealItem>
@@ -120,7 +114,7 @@ export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
                   </span>
                 </div>
 
-                <ul className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:grid-cols-1 2xl:grid-cols-2 2xl:gap-x-10">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-1 2xl:grid-cols-2 2xl:gap-x-10">
                   {biomarkers.map((b, i) => (
                     <BiomarkerRow key={b.id} b={b} first={i === 0} last={i === biomarkers.length - 1} />
                   ))}
@@ -165,8 +159,8 @@ function formatWeek(iso: string): string {
 function MiniDots({ label, value, invert }: { label: string; value: number; invert?: boolean }) {
   const dots = [1, 2, 3, 4, 5];
   return (
-    <div className="flex items-center gap-1.5">
-      <span className="text-[0.55rem] text-[#6B7A85] uppercase w-6">{label}</span>
+    <div className="flex items-center gap-2">
+      <span className="text-[0.55rem] tracking-[0.06em] text-[#6B7A85] uppercase w-7 flex-shrink-0">{label}</span>
       <div className="flex gap-0.5">
         {dots.map((d) => {
           const filled = invert ? d <= 6 - value : d <= value;
@@ -179,6 +173,9 @@ function MiniDots({ label, value, invert }: { label: string; value: number; inve
           );
         })}
       </div>
+      <span className="text-[0.65rem] text-[#6B7A85] tabular ml-1 flex-shrink-0">
+        {value}
+      </span>
     </div>
   );
 }

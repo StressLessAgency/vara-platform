@@ -70,5 +70,29 @@
       "quality": 0.85
     },
     "createdAt": 1778153512447
+  },
+  {
+    "id": "task-task_1778154354594_kqcj2l",
+    "key": "task_1778154354594_kqcj2l",
+    "content": "Task completed: task_1778154354594_kqcj2l",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778154355734
+  },
+  {
+    "id": "task-task_1778154781222_vkxy50",
+    "key": "task_1778154781222_vkxy50",
+    "content": "Task completed: task_1778154781222_vkxy50",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778154782037
   }
 ]

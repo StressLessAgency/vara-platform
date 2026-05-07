@@ -7,7 +7,9 @@ import type { Biomarker } from "@/lib/types";
 import { duration, ease } from "@/lib/motion-config";
 import { NumberFlow } from "@/components/motion/NumberFlow";
 
-// Biomarker bar with optimal range, spring-animated indicator, count-up value.
+// Biomarker card. Stacked vertical layout — name + value on top row,
+// then the optimal-range bar on its own line, then the low/high labels.
+// Prevents the value from crowding the bar on narrow columns.
 export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean; last: boolean }) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLLIElement>(null);
@@ -26,11 +28,23 @@ export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean;
   return (
     <li
       ref={ref}
-      className={`grid grid-cols-[1fr_2fr_auto] gap-8 items-baseline py-4 ${first ? "border-t border-[var(--color-hairline-strong)]" : "border-t border-[var(--color-hairline)]"} ${last ? "border-b border-[var(--color-hairline-strong)]" : ""}`}
+      className={`py-5 ${first ? "" : "border-t border-[var(--color-hairline)]"}`}
     >
-      <span className="font-serif text-[1.0625rem] opsz-text">{b.marker}</span>
+      {/* Top row: marker name + value */}
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        <span className="font-serif text-[1rem] sm:text-[1.0625rem] opsz-text text-[var(--color-ink)] truncate">
+          {b.marker}
+        </span>
+        <span className="font-serif text-[1rem] sm:text-[1.0625rem] text-[var(--color-ocean-deep)] tabular whitespace-nowrap flex-shrink-0">
+          <NumberFlow to={b.value} decimals={b.value % 1 === 0 ? 0 : 1} />
+          <span className="text-[0.7rem] text-[var(--color-ink-mute)] not-italic ml-1 font-sans">
+            {b.unit}
+          </span>
+        </span>
+      </div>
 
-      <div className="relative h-6">
+      {/* Bar row */}
+      <div className="relative h-3">
         {/* baseline rule */}
         <motion.div
           className="absolute top-1/2 left-0 h-px bg-[var(--color-hairline-strong)]"
@@ -40,7 +54,7 @@ export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean;
         />
         {/* optimal range band */}
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 h-2 bg-[var(--color-stone)]"
+          className="absolute top-1/2 -translate-y-1/2 h-1.5 bg-[var(--color-stone)] rounded-full"
           style={{ left: `${optStart}%`, width: `${optEnd - optStart}%`, transformOrigin: "left" }}
           initial={reduced || !inView ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
           animate={inView ? { scaleX: 1, opacity: 1 } : undefined}
@@ -49,23 +63,20 @@ export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean;
         />
         {/* value indicator */}
         <motion.div
-          className="absolute top-1/2 w-3 h-3 rounded-full"
+          className="absolute top-1/2 w-3 h-3 rounded-full ring-2 ring-white"
           style={{ left: `calc(${valuePct}% - 6px)`, translateY: "-50%", background: dotColor }}
           initial={reduced || !inView ? { left: `calc(${valuePct}% - 6px)`, scale: 1 } : { left: `calc(${optStart}% - 6px)`, scale: 0 }}
           animate={inView ? { left: `calc(${valuePct}% - 6px)`, scale: 1 } : undefined}
           transition={{ type: "spring", stiffness: 110, damping: 18, mass: 0.9, delay: 0.45 }}
           aria-label={`value ${b.value}`}
         />
-        <div className="absolute -bottom-3 left-0 right-0 flex justify-between text-[0.65rem] text-[var(--color-ink-mute)] tabular">
-          <span>{b.optimalLow}</span>
-          <span>{b.optimalHigh}</span>
-        </div>
       </div>
 
-      <span className="font-serif text-[1.0625rem] text-[var(--color-ocean-deep)] shrink-0">
-        <NumberFlow to={b.value} decimals={b.value % 1 === 0 ? 0 : 1} />
-        <span className="text-[0.75rem] text-[var(--color-ink-mute)] not-italic ml-1">{b.unit}</span>
-      </span>
+      {/* Range labels */}
+      <div className="flex justify-between text-[0.625rem] text-[var(--color-ink-mute)] tabular mt-2">
+        <span>{b.optimalLow}</span>
+        <span>{b.optimalHigh}</span>
+      </div>
     </li>
   );
 }
