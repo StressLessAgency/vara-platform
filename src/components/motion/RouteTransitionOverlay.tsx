@@ -51,7 +51,8 @@ export function RouteTransitionOverlay() {
         <motion.div
           key={activeKey}
           aria-hidden
-          className="fixed inset-0 z-[60] pointer-events-none overflow-hidden"
+          className="fixed inset-0 pointer-events-none overflow-hidden"
+          style={{ zIndex: 9000 }}
         >
           {/* === Sweeping curtain panel === */}
           <motion.div
