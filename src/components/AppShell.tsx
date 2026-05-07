@@ -153,29 +153,24 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main className="flex-1 pb-32 lg:pb-0" style={{ marginLeft: `var(--sidebar-width, 0px)` }}>
         <style>{`@media (min-width: 1024px) { :root { --sidebar-width: ${SIDEBAR_WIDTH}px; } }`}</style>
         <div className="layout-frame pt-8 sm:pt-12 md:pt-10 lg:pt-14">
+          {/*
+            Children swap instantly. The RouteTransitionOverlay curtain
+            covers the screen while the new page mounts, so a flash-swap
+            here is invisible to the resident — they only see the curtain
+            sweep + chapter title, then the new page revealed underneath.
+            Reduced-motion users get a fast cross-fade since the curtain
+            is suppressed.
+          */}
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={
-                reduced
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: 28, scale: 0.985, filter: "blur(8px)" }
-              }
-              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              exit={
-                reduced
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -12, scale: 0.992, filter: "blur(4px)" }
-              }
+              initial={reduced ? { opacity: 0 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={
                 reduced
                   ? { duration: 0.18, ease: "linear" }
-                  : {
-                      // Wait for the curtain to cover before swapping in.
-                      duration: 0.7,
-                      ease: [0.22, 0.61, 0.36, 1],
-                      delay: 0.55, // sweep-in (~420ms) + small breathing room
-                    }
+                  : { duration: 0.42, ease: [0.22, 0.61, 0.36, 1], delay: 0.42 }
               }
             >
               {children}
