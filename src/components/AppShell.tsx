@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Magnetic } from "./motion/Magnetic";
 import { HairlineDraw } from "./motion/HairlineDraw";
+import { RouteTransitionOverlay } from "./motion/RouteTransitionOverlay";
 import type { ReactNode } from "react";
 
 const NAV_ITEMS = [
@@ -24,6 +25,11 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <>
+      {/* ============================================================
+          ROUTE TRANSITION CURTAIN -- gold-hairline sweep + chapter title
+          ============================================================ */}
+      <RouteTransitionOverlay />
+
       {/* ============================================================
           DESKTOP SIDEBAR -- expanded with labels, descriptions, active state
           ============================================================ */}
@@ -148,10 +154,27 @@ export function AppShell({ children }: { children: ReactNode }) {
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.985, filter: "blur(6px)" }}
+              initial={
+                reduced
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: 28, scale: 0.985, filter: "blur(8px)" }
+              }
               animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-              exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.99, filter: "blur(3px)" }}
-              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
+              exit={
+                reduced
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: -12, scale: 0.992, filter: "blur(4px)" }
+              }
+              transition={
+                reduced
+                  ? { duration: 0.18, ease: "linear" }
+                  : {
+                      // Wait for the curtain to cover before swapping in.
+                      duration: 0.7,
+                      ease: [0.22, 0.61, 0.36, 1],
+                      delay: 0.55, // sweep-in (~420ms) + small breathing room
+                    }
+              }
             >
               {children}
             </motion.div>

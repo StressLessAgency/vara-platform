@@ -34,5 +34,17 @@
       "quality": 0.85
     },
     "createdAt": 1778147790001
+  },
+  {
+    "id": "task-task_1778151147560_yn7tll",
+    "key": "task_1778151147560_yn7tll",
+    "content": "Task completed: task_1778151147560_yn7tll",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778151148161
   }
 ]
