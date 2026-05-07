@@ -89,12 +89,12 @@ export function ProfileClient({ resident, checkins, events, myTeam }: Props) {
       <section className="bleed -mt-8 sm:-mt-12 lg:-mt-16">
         <div className="relative h-[44vh] md:h-[46vh] lg:h-[52vh] xl:h-[58vh] min-h-[340px]">
           <ParallaxImage
-            src="/vara/photos/vara-today-hero.jpg"
+            src="/vara/photos/vara-profile-hero.jpg"
             alt=""
             className="absolute inset-0 h-full w-full"
             priority
             speed={0.12}
-            objectPosition="center 35%"
+            objectPosition="center 40%"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F1F2C] via-[#1A2935]/65 to-[#1A2935]/15" />
           <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[#0F1F2C]/95 via-[#1A2935]/55 to-transparent pointer-events-none" />

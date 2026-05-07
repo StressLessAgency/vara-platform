@@ -22,5 +22,17 @@
       "quality": 0.85
     },
     "createdAt": 1778146700935
+  },
+  {
+    "id": "task-task_1778147789077_njtv4b",
+    "key": "task_1778147789077_njtv4b",
+    "content": "Task completed: task_1778147789077_njtv4b",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778147790001
   }
 ]
