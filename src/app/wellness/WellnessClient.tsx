@@ -12,10 +12,9 @@ import type { Checkin, Biomarker } from "@/lib/types";
 type Props = {
   checkins: Checkin[];
   biomarkers: Biomarker[];
-  protocolTags: string[];
 };
 
-export function WellnessClient({ checkins, biomarkers, protocolTags }: Props) {
+export function WellnessClient({ checkins, biomarkers }: Props) {
   const latest = checkins[0];
 
   return (

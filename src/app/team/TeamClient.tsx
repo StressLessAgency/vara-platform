@@ -61,13 +61,14 @@ export function TeamClient({ staff }: Props) {
       <Reveal>
         <section className="layout-frame-flush">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <div className="flex flex-wrap gap-1.5">
+            <div role="group" aria-label="Filter by department" className="flex flex-wrap gap-1.5">
               {ALL_DEPTS.map((d) => (
                 <button
                   key={d}
                   type="button"
                   onClick={() => setFilter(d)}
-                  className={`text-[0.7rem] tracking-[0.06em] px-3.5 py-1.5 rounded-full border transition-all ${
+                  aria-pressed={filter === d}
+                  className={`min-h-[44px] inline-flex items-center text-[0.7rem] tracking-[0.06em] px-3.5 py-2 rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                     filter === d
                       ? "bg-[var(--color-accent)] text-white border-[var(--color-accent)]"
                       : "bg-white/70 text-[var(--color-ink-soft)] border-[var(--color-hairline)] hover:bg-[var(--color-accent-wash)]"
@@ -77,16 +78,16 @@ export function TeamClient({ staff }: Props) {
                 </button>
               ))}
             </div>
-            <span className="hidden sm:block w-px h-5 bg-[var(--color-hairline)] mx-1" />
+            <span className="hidden sm:block w-px h-5 bg-[var(--color-hairline)] mx-1" aria-hidden />
             <button
               type="button"
               onClick={() => setShowOnShiftOnly((v) => !v)}
-              className={`flex items-center gap-2 text-[0.7rem] tracking-[0.06em] px-3.5 py-1.5 rounded-full border transition-all ${
+              aria-pressed={showOnShiftOnly}
+              className={`min-h-[44px] inline-flex items-center gap-2 text-[0.7rem] tracking-[0.06em] px-3.5 py-2 rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                 showOnShiftOnly
                   ? "bg-[#4FA88A]/10 text-[#2F7A60] border-[#4FA88A]/40"
                   : "bg-white/70 text-[var(--color-ink-soft)] border-[var(--color-hairline)] hover:bg-[var(--color-accent-wash)]"
               }`}
-              aria-pressed={showOnShiftOnly}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${showOnShiftOnly ? "bg-[#4FA88A]" : "bg-[var(--color-ink-faint)]"}`} />
               On shift now
@@ -151,7 +152,8 @@ export function TeamClient({ staff }: Props) {
 
                     <Link
                       href="/concierge"
-                      className="text-[0.75rem] text-[var(--color-accent)] hover:text-[var(--color-ink)] transition-colors font-medium pt-2 border-t border-[var(--color-hairline)]"
+                      aria-label={`Send a quiet message to ${s.firstName} ${s.lastName}`}
+                      className="min-h-[44px] inline-flex items-center text-[0.75rem] text-[var(--color-accent)] hover:text-[var(--color-ink)] transition-colors font-medium pt-2 border-t border-[var(--color-hairline)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-sm"
                     >
                       Send a quiet message →
                     </Link>

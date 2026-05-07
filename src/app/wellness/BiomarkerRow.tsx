@@ -29,6 +29,7 @@ export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean;
     <li
       ref={ref}
       className={`py-5 ${first ? "" : "border-t border-[var(--color-hairline)]"}`}
+      aria-label={`${b.marker}: ${b.value} ${b.unit}, ${inOptimal ? "in" : "outside"} optimal range ${b.optimalLow} to ${b.optimalHigh}`}
     >
       {/* Top row: marker name + value */}
       <div className="flex items-baseline justify-between gap-4 mb-3">
@@ -44,7 +45,7 @@ export function BiomarkerRow({ b, first, last }: { b: Biomarker; first: boolean;
       </div>
 
       {/* Bar row */}
-      <div className="relative h-3">
+      <div className="relative h-3" aria-hidden>
         {/* baseline rule */}
         <motion.div
           className="absolute top-1/2 left-0 h-px bg-[var(--color-hairline-strong)]"
