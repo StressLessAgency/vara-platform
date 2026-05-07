@@ -46,5 +46,17 @@
       "quality": 0.85
     },
     "createdAt": 1778151148161
+  },
+  {
+    "id": "task-task_1778152844035_0jh5js",
+    "key": "task_1778152844035_0jh5js",
+    "content": "Task completed: task_1778152844035_0jh5js",
+    "namespace": "tasks",
+    "type": "task-outcome",
+    "metadata": {
+      "success": true,
+      "quality": 0.85
+    },
+    "createdAt": 1778152844673
   }
 ]

@@ -26,7 +26,8 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <>
       {/* ============================================================
-          ROUTE TRANSITION CURTAIN -- gold-hairline sweep + chapter title
+          ROUTE TRANSITION -- subtle gold hairline scribe at top of viewport
+          (no curtain, no chapter title, just a quiet page-seam)
           ============================================================ */}
       <RouteTransitionOverlay />
 
@@ -154,23 +155,32 @@ export function AppShell({ children }: { children: ReactNode }) {
         <style>{`@media (min-width: 1024px) { :root { --sidebar-width: ${SIDEBAR_WIDTH}px; } }`}</style>
         <div className="layout-frame pt-8 sm:pt-12 md:pt-10 lg:pt-14">
           {/*
-            Children swap instantly. The RouteTransitionOverlay curtain
-            covers the screen while the new page mounts, so a flash-swap
-            here is invisible to the resident — they only see the curtain
-            sweep + chapter title, then the new page revealed underneath.
-            Reduced-motion users get a fast cross-fade since the curtain
-            is suppressed.
+            Quiet page transition. Old page exits fast (180ms blur+fade),
+            new page enters with a subtle rise + soft blur clear (320ms).
+            No curtain, no overlay copy — information lands immediately,
+            with just enough motion to feel intentional.
           */}
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={reduced ? { opacity: 0 } : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={
+                reduced
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: 6, filter: "blur(4px)" }
+              }
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={
+                reduced
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: -3, filter: "blur(2px)" }
+              }
               transition={
                 reduced
-                  ? { duration: 0.18, ease: "linear" }
-                  : { duration: 0.42, ease: [0.22, 0.61, 0.36, 1], delay: 0.42 }
+                  ? { duration: 0.14, ease: "linear" }
+                  : {
+                      duration: 0.32,
+                      ease: [0.22, 0.61, 0.36, 1],
+                    }
               }
             >
               {children}
