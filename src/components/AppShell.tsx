@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Magnetic } from "./motion/Magnetic";
 import { HairlineDraw } from "./motion/HairlineDraw";
-import { RouteTransitionOverlay } from "./motion/RouteTransitionOverlay";
 import type { ReactNode } from "react";
 
 const NAV_ITEMS = [
@@ -25,12 +24,6 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      {/* ============================================================
-          ROUTE TRANSITION -- subtle gold hairline scribe at top of viewport
-          (no curtain, no chapter title, just a quiet page-seam)
-          ============================================================ */}
-      <RouteTransitionOverlay />
-
       {/* ============================================================
           DESKTOP SIDEBAR -- expanded with labels, descriptions, active state
           ============================================================ */}
@@ -71,9 +64,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           {NAV_ITEMS.map(({ href, label, icon: Icon, description }) => {
             const active = pathname === href;
             return (
-              <Link key={href} href={href} aria-label={label} className="block">
-              <Magnetic as="div" strength={4}
-                className={`relative flex items-center gap-3.5 px-3 py-3 rounded-2xl transition-all duration-200 group cursor-pointer ${
+              <Magnetic key={href} as="a" href={href} strength={4} ariaLabel={label}
+                className={`relative flex items-center gap-3.5 px-3 py-3 rounded-2xl transition-all duration-200 group ${
                   active
                     ? "text-[var(--color-accent)]"
                     : "text-[var(--color-ink-mute)] hover:text-[var(--color-ink-soft)] hover:bg-[var(--color-accent-wash)]"
@@ -118,7 +110,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                   />
                 )}
               </Magnetic>
-              </Link>
             );
           })}
         </div>
@@ -154,22 +145,13 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main className="flex-1 pb-32 lg:pb-0" style={{ marginLeft: `var(--sidebar-width, 0px)` }}>
         <style>{`@media (min-width: 1024px) { :root { --sidebar-width: ${SIDEBAR_WIDTH}px; } }`}</style>
         <div className="layout-frame pt-8 sm:pt-12 md:pt-10 lg:pt-14">
-          {/*
-            Quiet page transition. Subtle 220ms cross-fade with a 4px rise.
-            No blur (causes GPU layer to persist on enter), no curtain,
-            no overlay copy — content lands immediately.
-          */}
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
-              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduced ? { opacity: 0 } : { opacity: 0 }}
-              transition={
-                reduced
-                  ? { duration: 0.14, ease: "linear" }
-                  : { duration: 0.22, ease: [0.22, 0.61, 0.36, 1] }
-              }
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.985, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+              exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.99, filter: "blur(3px)" }}
+              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
             >
               {children}
             </motion.div>
